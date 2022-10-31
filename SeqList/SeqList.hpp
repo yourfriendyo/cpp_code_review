@@ -83,6 +83,38 @@ void SeqListPopFront(SL* s)
     s->_size--;
 }
 
+int SeqListFind(SL* s, SLDataType x)
+{
+    for (int i = 0; i < s->_size; ++i)
+    {
+        if (s->_a[i] == x) return i;
+    }
+
+    return -1;
+}
+
+void SeqListInsert(SL* s, int pos, SLDataType x)
+{
+    CheckCapacity(s);
+    s->_size++;
+
+    for (int i = s->_size; i > pos; i++)
+        s->_a[i] = s->_a[i - 1];
+
+    s->_a[pos] = x;
+}
+
+void SeqListErase(SL* s, int pos)
+{
+    assert(s->_size > 0);
+
+    for (int i = pos + 1; i < s->_size; ++i)
+        s->_a[i - 1] = s->_a[i];
+
+    s->_size--;
+}
+
+
 void SeqListPrint(SL* s)
 {
     for (int i = 0; i < s->_size; i++)
