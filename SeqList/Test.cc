@@ -21,10 +21,18 @@ void TestSeqList1()
     // SeqListPushBack(&s, 14);
     // SeqListPushBack(&s, 15);
 
-    SeqListPushFront(&s, 0);
-    SeqListPushFront(&s, -1);
-    SeqListPopFront(&s);
-    SeqListPopFront(&s);
+    // SeqListPushFront(&s, 0);
+    // SeqListPushFront(&s, -1);
+    // SeqListPopFront(&s);
+    // SeqListPopFront(&s);
+
+    SeqListInsert(&s, 1, 1);
+    SeqListInsert(&s, 1, 2);
+    SeqListInsert(&s, 5, 3);
+
+    SeqListErase(&s, 1);
+    SeqListErase(&s, 2);
+    SeqListErase(&s, 3);
 
     SeqListPrint(&s);
 

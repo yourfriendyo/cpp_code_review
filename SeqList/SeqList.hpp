@@ -95,10 +95,12 @@ int SeqListFind(SL* s, SLDataType x)
 
 void SeqListInsert(SL* s, int pos, SLDataType x)
 {
+    assert(pos < 0 || pos > s->_size);
+
     CheckCapacity(s);
     s->_size++;
 
-    for (int i = s->_size; i > pos; i++)
+    for (int i = s->_size; i > pos; --i)
         s->_a[i] = s->_a[i - 1];
 
     s->_a[pos] = x;
@@ -107,6 +109,7 @@ void SeqListInsert(SL* s, int pos, SLDataType x)
 void SeqListErase(SL* s, int pos)
 {
     assert(s->_size > 0);
+    assert(pos < 0 || pos >= s->_size);
 
     for (int i = pos + 1; i < s->_size; ++i)
         s->_a[i - 1] = s->_a[i];
