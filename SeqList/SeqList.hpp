@@ -75,9 +75,13 @@ void SeqListPushFront(SL* s, SLDataType x)
 
 void SeqListPopFront(SL* s)
 {
+    assert(s->_size > 0);
 
+    for (int i = 1; i < s->_size; ++i)
+        s->_a[i - 1] = s->_a[i];
+
+    s->_size--;
 }
-
 
 void SeqListPrint(SL* s)
 {

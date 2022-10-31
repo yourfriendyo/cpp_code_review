@@ -15,11 +15,16 @@ void TestSeqList1()
     SeqListPushBack(&s, 4);
     SeqListPushBack(&s, 5);
 
-    SeqListPopBack(&s);
-    SeqListPopBack(&s);
+    // SeqListPopBack(&s);
+    // SeqListPopBack(&s);
 
-    SeqListPushBack(&s, 14);
-    SeqListPushBack(&s, 15);
+    // SeqListPushBack(&s, 14);
+    // SeqListPushBack(&s, 15);
+
+    SeqListPushFront(&s, 0);
+    SeqListPushFront(&s, -1);
+    SeqListPopFront(&s);
+    SeqListPopFront(&s);
 
     SeqListPrint(&s);
 
