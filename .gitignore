@@ -1,18 +1,18 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+# file
+.DS_Store
 
-# Other files and folders
-.settings/
+# CLion
+cmake-build-debug/
+.idea/
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+# VSCode
+.vscode/
+main.dSYM
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# VS2022
+x64/
+.vs/
+*.vcxproj
+*.filters
+*.user
+Debug/
