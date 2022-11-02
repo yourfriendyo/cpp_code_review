@@ -6,42 +6,69 @@ using namespace std;
 
 void TestSeqList1()
 {
-    SL s;
-    SeqListInit(&s);
+    SL sl;
+    SeqListInit(&sl);
 
-    SeqListPushBack(&s, 1);
-    SeqListPushBack(&s, 2);
-    SeqListPushBack(&s, 3);
-    SeqListPushBack(&s, 4);
-    SeqListPushBack(&s, 5);
+    SeqListPushBack(&sl, 1);
+    SeqListPushBack(&sl, 2);
+    SeqListPushBack(&sl, 3);
+    SeqListPushBack(&sl, 4);
+    SeqListPushBack(&sl, 5);
 
-    // SeqListPopBack(&s);
-    // SeqListPopBack(&s);
+    SeqListPopBack(&sl);
+    SeqListPopBack(&sl);
+    SeqListPopBack(&sl);
+    SeqListPopBack(&sl);
+    // SeqListPopBack(&sl);
 
-    // SeqListPushBack(&s, 14);
-    // SeqListPushBack(&s, 15);
 
-    // SeqListPushFront(&s, 0);
-    // SeqListPushFront(&s, -1);
-    // SeqListPopFront(&s);
-    // SeqListPopFront(&s);
+    SeqListDestory(&sl);
+}
 
-    SeqListInsert(&s, 1, 1);
-    SeqListInsert(&s, 1, 2);
-    SeqListInsert(&s, 5, 3);
+void TestSeqList2()
+{
+    SL sl;
+    SeqListInit(&sl);
 
-    SeqListErase(&s, 1);
-    SeqListErase(&s, 2);
-    SeqListErase(&s, 3);
+    SeqListPushBack(&sl, 1);
+    SeqListPushBack(&sl, 2);
 
-    SeqListPrint(&s);
+    SeqListPushFront(&sl, 0);
+    SeqListPushFront(&sl, -1);
+    SeqListPushFront(&sl, -2);
 
-    SeqListDestroy(&s);
+    SeqListPopFront(&sl);
+    SeqListPopFront(&sl);
+    SeqListPopFront(&sl);
+
+    SeqListDestory(&sl);
+}
+
+void TestSeqList3()
+{
+    SL sl;
+    SeqListInit(&sl);
+
+    SeqListInsert(&sl, 0, 1);
+    SeqListInsert(&sl, 1, 2);
+    SeqListInsert(&sl, 2, 3);
+    SeqListInsert(&sl, 3, 4);
+    SeqListInsert(&sl, 4, 5);
+
+    SeqListErase(&sl, 0);
+    SeqListErase(&sl, 1);
+    SeqListErase(&sl, 2);
+    SeqListErase(&sl, 3);
+    SeqListErase(&sl, 4);
+
+    SeqListDestory(&sl);
 }
 
 int main()
 {
-    TestSeqList1();
+    // TestSeqList1();
+    // TestSeqList2();
+    // TestSeqList3();
 
     return 0;
 }
