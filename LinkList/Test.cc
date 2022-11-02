@@ -15,11 +15,16 @@ void TestSList1()
     n3->_next = n4;
     n4->_next = nullptr;
 
+    CreateSList(3);
+
+    SListPrint(n1);
 }
 
 
 int main()
 {
+
+    TestSList1();
 
     return 0;
 }

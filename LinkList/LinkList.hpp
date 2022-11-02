@@ -23,3 +23,36 @@ SLTNode* BuySLTNode(SLTDataType x)
 
     return new_node;
 }
+
+SLTNode* CreateSList(int n)
+{
+    SLTNode* phead = nullptr;
+    SLTNode* ptail = nullptr;
+
+    for (int i = 0; i < n; ++i)
+    {
+        SLTNode* new_node = BuySLTNode(i);
+        if (phead == nullptr)
+        {
+            phead = new_node;
+            ptail = new_node;
+        }
+        else
+        {
+            ptail->_next = new_node;
+            ptail = ptail->_next;
+        }
+    }
+
+    return phead;
+}
+
+void SListPrint(SLTNode* phead)
+{
+    while (phead != nullptr)
+    {
+        cout << phead->_data << " ";
+        phead = phead->_next;
+    }
+    cout << "#" << endl;
+}
