@@ -31,7 +31,7 @@ SLTNode* CreateSList(int n)
 
     for (int i = 0; i < n; ++i)
     {
-        SLTNode* new_node = BuySLTNode(i);
+        SLTNode* new_node = BuySLTNode(i + 1);
         if (phead == nullptr)
         {
             phead = new_node;
@@ -47,6 +47,19 @@ SLTNode* CreateSList(int n)
     return phead;
 }
 
+void SLTDestory(SLTNode* phead)
+{
+    SLTNode* pcur = phead;
+    while (pcur)
+    {
+        SLTNode* next = pcur->_next;
+
+        free(pcur);
+        pcur = next;
+    }
+
+}
+
 void SListPrint(SLTNode* phead)
 {
     while (phead != nullptr)
@@ -55,4 +68,35 @@ void SListPrint(SLTNode* phead)
         phead = phead->_next;
     }
     cout << "#" << endl;
+}
+
+void SLTPushBack(SLTNode** phead, SLTDataType x)
+{
+    if (*phead == nullptr)
+    {
+        *phead = BuySLTNode(x);
+    }
+    else
+    {
+        SLTNode* tail = *phead;
+        while (tail->_next)
+            tail = tail->_next;
+
+        tail->_next = BuySLTNode(x);
+    }
+}
+
+void SLTPopBack(SLTNode* phead)
+{
+
+}
+
+void SLTPushFront(SLTNode* phead, SLTDataType x)
+{
+
+}
+
+void SLTPopFront(SLTNode* phead)
+{
+
 }
