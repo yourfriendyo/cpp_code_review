@@ -22,15 +22,24 @@ void TestSList1()
 
 void TestSList2()
 {
-    SLTNode* plist = nullptr;
-    // SLTNode* plist = CreateSList(5);
+    // SLTNode* plist = nullptr;
+    SLTNode* plist = CreateSList(4);
     SListPrint(plist);
 
-    SLTPushBack(&plist, 6);
-    SLTPushBack(&plist, 7);
+    SLTPopBack(&plist);
+    SListPrint(plist);
+
+    SLTPopBack(&plist);
+    SListPrint(plist);
+
+    SLTPopBack(&plist);
+    SListPrint(plist);
+
+    SLTPopBack(&plist);
 
     SListPrint(plist);
 
+    // SLTPopBack(&plist);
 }
 
 

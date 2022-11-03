@@ -57,7 +57,6 @@ void SLTDestory(SLTNode* phead)
         free(pcur);
         pcur = next;
     }
-
 }
 
 void SListPrint(SLTNode* phead)
@@ -72,6 +71,8 @@ void SListPrint(SLTNode* phead)
 
 void SLTPushBack(SLTNode** phead, SLTDataType x)
 {
+    assert(phead);
+
     if (*phead == nullptr)
     {
         *phead = BuySLTNode(x);
@@ -86,17 +87,50 @@ void SLTPushBack(SLTNode** phead, SLTDataType x)
     }
 }
 
-void SLTPopBack(SLTNode* phead)
+void SLTPopBack(SLTNode** phead)
 {
+    assert(phead && *phead);
 
+    if ((*phead)->_next == nullptr)
+    {
+        free(*phead);
+        *phead = nullptr;
+    }
+    else
+    {
+        SLTNode* prev = nullptr;
+        SLTNode* tail = *phead;
+
+        while (tail->_next)
+        {
+            prev = tail;
+            tail = tail->_next;
+        }
+
+        free(tail);
+        prev->_next = nullptr;
+    }
 }
 
-void SLTPushFront(SLTNode* phead, SLTDataType x)
+void SLTPushFront(SLTNode** phead, SLTDataType x)
 {
+    assert(phead);
 
+    if (*phead == nullptr)
+    {
+        *phead = BuySLTNode(x);
+    }
+    else
+    {
+        SLTNode* next = (*phead);
+        *phead = BuySLTNode(x);
+
+        (*phead)->_next = next;
+    }
 }
 
-void SLTPopFront(SLTNode* phead)
+void SLTPopFront(SLTNode** phead)
 {
-
+    assert(phead && *phead);
+    *phead = (*phead)->_next;
 }
