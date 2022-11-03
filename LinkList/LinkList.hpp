@@ -59,12 +59,16 @@ void SLTDestory(SLTNode* phead)
     }
 }
 
-void SListPrint(SLTNode* phead)
+void SLTPrint(SLTNode** phead)
 {
-    while (phead != nullptr)
+    assert(phead);
+
+    SLTNode* cur = *phead;
+
+    while (cur != nullptr)
     {
-        cout << phead->_data << " ";
-        phead = phead->_next;
+        cout << cur->_data << " ";
+        cur = cur->_next;
     }
     cout << "#" << endl;
 }
@@ -116,21 +120,91 @@ void SLTPushFront(SLTNode** phead, SLTDataType x)
 {
     assert(phead);
 
-    if (*phead == nullptr)
-    {
-        *phead = BuySLTNode(x);
-    }
-    else
-    {
-        SLTNode* next = (*phead);
-        *phead = BuySLTNode(x);
+    SLTNode* new_node = BuySLTNode(x);
+    new_node->_next = *phead;
 
-        (*phead)->_next = next;
-    }
+    (*phead) = new_node;
 }
 
 void SLTPopFront(SLTNode** phead)
 {
     assert(phead && *phead);
-    *phead = (*phead)->_next;
+
+    SLTNode* next = (*phead)->_next;
+    free(*phead);
+
+    *phead = next;
+}
+
+SLTNode* SLTFind(SLTNode** phead, SLTDataType x)
+{
+    SLTNode* cur = *phead;
+    while (cur && cur->_data != x)
+        cur = cur->_next;
+
+    return cur;
+}
+
+void SLTInsertAfter(SLTNode** phead, SLTNode* pos, SLTDataType x)
+{
+    assert(phead && *phead && pos);
+
+    SLTNode* newNode = BuySLTNode(x);
+
+    newNode->_next = pos->_next;
+    pos->_next = newNode;
+}
+
+void SLTInsert(SLTNode** phead, SLTNode* pos, SLTDataType x)
+{
+    if (pos == *phead)
+        SLTPushFront(phead, x);
+    else if (pos == nullptr)
+        SLTPushBack(phead, x);
+    else
+    {
+        SLTNode* prev = *phead;
+        while (prev && prev->_next != pos)
+            prev = prev->_next;
+
+        if (prev == nullptr)
+            exit(-3);
+
+        SLTNode* newNode = BuySLTNode(x);
+        prev->_next = newNode;
+        newNode->_next = pos;
+    }
+}
+
+void SLTEraseAfter(SLTNode** phead, SLTNode* pos)
+{
+    assert(phead && *phead && pos);
+
+    if (pos->_next == nullptr)
+        return;
+
+    SLTNode* nextNext = pos->_next->_next;
+
+    free(pos->_next);
+    pos->_next = nextNext;
+}
+
+void SLTErase(SLTNode** phead, SLTNode* pos)
+{
+    if (*phead == pos)
+        SLTPopFront(phead);
+    else if (pos == nullptr)
+        SLTPopBack(phead);
+    else
+    {
+        SLTNode* prev = *phead;
+        while (prev && prev->_next != pos)
+            prev = prev->_next;
+
+        if (prev == nullptr)
+            exit(-4);
+
+        prev->_next = pos->_next;
+        free(pos);
+    }
 }

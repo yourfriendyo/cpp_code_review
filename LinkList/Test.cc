@@ -17,37 +17,80 @@ void TestSList1()
 
     CreateSList(3);
 
-    SListPrint(n1);
+    SLTPrint(&n1);
 }
 
 void TestSList2()
 {
     // SLTNode* plist = nullptr;
     SLTNode* plist = CreateSList(4);
-    SListPrint(plist);
+    SLTPrint(&plist);
 
     SLTPopBack(&plist);
-    SListPrint(plist);
+    SLTPrint(&plist);
 
     SLTPopBack(&plist);
-    SListPrint(plist);
+    SLTPrint(&plist);
 
     SLTPopBack(&plist);
-    SListPrint(plist);
+    SLTPrint(&plist);
 
     SLTPopBack(&plist);
 
-    SListPrint(plist);
+    SLTPrint(&plist);
 
     // SLTPopBack(&plist);
 }
 
+void TestSList3()
+{
+    SLTNode* plist = nullptr;
+    // SLTNode* plist = CreateSList(1);
+
+    SLTPushFront(&plist, 0);
+    SLTPopFront(&plist);
+    SLTPrint(&plist);
+
+    SLTPushFront(&plist, -1);
+    SLTPopFront(&plist);
+    SLTPrint(&plist);
+
+    SLTPushFront(&plist, -2);
+    SLTPopFront(&plist);
+    SLTPrint(&plist);
+
+    // SLTPopFront(&plist);
+}
+
+
+void TestSList4()
+{
+    SLTNode* plist = BuySLTNode(1);
+
+    SLTInsert(&plist, SLTFind(&plist, 1), 0);
+    SLTPrint(&plist);
+
+    SLTInsertAfter(&plist, SLTFind(&plist, 1), 2);
+    SLTPrint(&plist);
+
+    SLTEraseAfter(&plist, SLTFind(&plist, 0));
+    SLTPrint(&plist);
+
+    SLTErase(&plist, SLTFind(&plist, 0));
+    SLTPrint(&plist);
+
+    SLTErase(&plist, SLTFind(&plist, 2));
+    SLTPrint(&plist);
+
+}
 
 int main()
 {
 
     // TestSList1();
-    TestSList2();
+    // TestSList2();
+    // TestSList3();
+    TestSList4();
 
     return 0;
 }
