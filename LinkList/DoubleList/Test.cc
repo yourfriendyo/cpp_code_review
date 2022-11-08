@@ -20,6 +20,7 @@ void TestDList1()
     DLTPrint(list);
     DLTPopBack(list);
     DLTPrint(list);
+    // DLTPopBack(list);
 }
 
 void TestDList2()
@@ -39,7 +40,7 @@ void TestDList2()
     DLTPrint(list);
     DLTPopFront(list);
     DLTPrint(list);
-
+    // DLTPopFront(list);
 }
 
 int main()
