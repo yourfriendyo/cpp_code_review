@@ -4,17 +4,16 @@
 
 using namespace std;
 
-typedef int DLTDataType;
+typedef int LTDataType;
 
 typedef struct ListNode
 {
-    DLTDataType val;
+    LTDataType val;
     struct ListNode* prev;
     struct ListNode* next;
 }DLTNode;
 
-
-DLTNode* BuyDLTNode(DLTDataType x)
+DLTNode* BuyLTNode(LTDataType x)
 {
     DLTNode* node = (DLTNode*)malloc(sizeof(DLTNode));
     if (node == nullptr)
@@ -24,22 +23,20 @@ DLTNode* BuyDLTNode(DLTDataType x)
 
     return node;
 }
-
 DLTNode* DLTInit()
 {
-    DLTNode* head = BuyDLTNode(-1);
+    DLTNode* head = BuyLTNode(-1);
     head->next = head;
     head->prev = head;
 
     return head;
 }
 
-void DLTPushBack(DLTNode* head, DLTDataType x)
+void DLTPushBack(DLTNode* head, LTDataType x)
 {
     assert(head);
-
-    DLTNode* newNode = BuyDLTNode(x);
     DLTNode* tail = head->prev;
+    DLTNode* newNode = BuyLTNode(x);
 
     head->prev = newNode;
     newNode->next = head;
@@ -61,25 +58,26 @@ void DLTPopBack(DLTNode* head)
     free(tail);
 }
 
-void DLTPushFront(DLTNode* head, DLTDataType x)
+void DLTPushFront(DLTNode* head, LTDataType x)
 {
     assert(head);
 
-    DLTNode* newNode = BuyDLTNode(x);
-    DLTNode* front = head->next;
+    DLTNode* newNode = BuyLTNode(x);
+    DLTNode* first = head->next;
 
-    newNode->prev = head;
     head->next = newNode;
+    newNode->prev = head;
 
-    front->prev = newNode;
-    newNode->next = front;
+    newNode->next = first;
+    first->prev = newNode;
 }
 
 void DLTPopFront(DLTNode* head)
 {
     assert(head && head->next != head);
+
     DLTNode* first = head->next;
-    DLTNode* second = first->next;
+    DLTNode* second = head->next->next;
 
     head->next = second;
     second->prev = head;
@@ -87,16 +85,14 @@ void DLTPopFront(DLTNode* head)
     free(first);
 }
 
-void DLTPrint(DLTNode* list)
+void DLTPrint(DLTNode* head)
 {
-    assert(list);
-    DLTNode* cur = list->next;
+    DLTNode* cur = head->next;
 
-    while (cur != list)
+    while (cur != head)
     {
         cout << cur->val << " ";
         cur = cur->next;
     }
-
     cout << endl;
 }
