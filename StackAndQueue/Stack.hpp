@@ -4,11 +4,11 @@
 
 using namespace std;
 
-typedef int DataType;
+typedef int STDataType;
 
 typedef struct Stack
 {
-    DataType* data;
+    STDataType* data;
     int top;
     int capacity;
 }ST;
