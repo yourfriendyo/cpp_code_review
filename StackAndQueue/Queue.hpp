@@ -33,10 +33,11 @@ void QueueDestroy(QE* q)
     assert(q);
     QNode* cur = q->head;
 
-    while (cur != nullptr)
+    while (cur)
     {
         QNode* del = cur;
         cur = cur->next;
+
         free(del);
     }
 
@@ -44,16 +45,16 @@ void QueueDestroy(QE* q)
     q->size = 0;
 }
 
-void QueuePush(QE* q, QEDataType val)
+void QueuePush(QE* q, QEDataType x)
 {
     assert(q);
+
     QNode* newNode = (QNode*)malloc(sizeof(QNode));
     assert(newNode);
-
-    newNode->val = val;
+    newNode->val = x;
     newNode->next = nullptr;
 
-    if (q->tail == nullptr)
+    if (q->head == nullptr)
     {
         q->head = q->tail = newNode;
     }
@@ -73,12 +74,24 @@ void QueuePop(QE* q)
     QNode* del = q->head;
 
     if (q->head == q->tail)
-        q->head = q->tail = nullptr;
+        q->head = nullptr;
     else
         q->head = q->head->next;
 
     free(del);
     q->size--;
+}
+
+int QueueSize(QE* q)
+{
+    assert(q);
+    return q->size;
+}
+
+bool QueueEmpty(QE* q)
+{
+    assert(q);
+    return q->head == nullptr;
 }
 
 QEDataType QueueFront(QE* q)
@@ -91,23 +104,4 @@ QEDataType QueueBack(QE* q)
 {
     assert(q && q->head);
     return q->tail->val;
-}
-
-bool QueueEmpty(QE* q)
-{
-    return q->head == nullptr;
-}
-
-int QueueSize(QE* q)
-{
-    // int size = 0;
-    // QNode* cur = q->head;
-    //
-    // while (cur)
-    // {
-    //     size++;
-    //     cur = cur->next;
-    // }
-
-    return q->size;
 }
