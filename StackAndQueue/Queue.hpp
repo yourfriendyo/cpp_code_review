@@ -18,12 +18,14 @@ typedef struct Queue
 {
     QNode* head;
     QNode* tail;
+    int size;
 }QE;
 
 void QueueInit(QE* q)
 {
     assert(q);
     q->head = q->tail = nullptr;
+    q->size = 0;
 }
 
 void QueueDestroy(QE* q)
@@ -39,7 +41,7 @@ void QueueDestroy(QE* q)
     }
 
     q->head = q->tail = nullptr;
-    free(q);
+    q->size = 0;
 }
 
 void QueuePush(QE* q, QEDataType val)
@@ -60,6 +62,8 @@ void QueuePush(QE* q, QEDataType val)
         q->tail->next = newNode;
         q->tail = newNode;
     }
+
+    q->size++;
 }
 
 void QueuePop(QE* q)
@@ -74,6 +78,7 @@ void QueuePop(QE* q)
         q->head = q->head->next;
 
     free(del);
+    q->size--;
 }
 
 QEDataType QueueFront(QE* q)
@@ -95,14 +100,14 @@ bool QueueEmpty(QE* q)
 
 int QueueSize(QE* q)
 {
-    int size = 0;
-    QNode* cur = q->head;
+    // int size = 0;
+    // QNode* cur = q->head;
+    //
+    // while (cur)
+    // {
+    //     size++;
+    //     cur = cur->next;
+    // }
 
-    while (cur)
-    {
-        size++;
-        cur = cur->next;
-    }
-
-    return size;
+    return q->size;
 }

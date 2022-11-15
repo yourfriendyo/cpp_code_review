@@ -43,13 +43,44 @@ void TestStack()
 
 void TestQueue()
 {
+    QE q;
+    QueueInit(&q);
 
+    QueuePush(&q, 1);
+    cout << QueueFront(&q) << " " << QueueBack(&q) << endl;
+    cout << QueueSize(&q) << endl;
+    QueuePush(&q, 2);
+    cout << QueueFront(&q) << " " << QueueBack(&q) << endl;
+    cout << QueueSize(&q) << endl;
+    QueuePush(&q, 3);
+    cout << QueueFront(&q) << " " << QueueBack(&q) << endl;
+    cout << QueueSize(&q) << endl;
+    QueuePush(&q, 4);
+    cout << QueueFront(&q) << " " << QueueBack(&q) << endl;
+    cout << QueueSize(&q) << endl;
+
+    QueuePop(&q);
+    cout << QueueFront(&q) << " " << QueueBack(&q) << endl;
+    cout << QueueSize(&q) << endl;
+    QueuePop(&q);
+    cout << QueueFront(&q) << " " << QueueBack(&q) << endl;
+    cout << QueueSize(&q) << endl;
+    QueuePop(&q);
+    cout << QueueFront(&q) << " " << QueueBack(&q) << endl;
+    cout << QueueSize(&q) << endl;
+    QueuePop(&q);
+    cout << QueueSize(&q) << endl;
+    // cout << QueueFront(&q) << " " << QueueBack(&q) << endl;
+
+    // QueuePop(&q);
+
+    QueueDestroy(&q);
 }
 
 
 int main()
 {
-    TestStack();
+    // TestStack();
 
     TestQueue();
 
