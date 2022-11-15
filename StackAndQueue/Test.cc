@@ -4,7 +4,7 @@
 #include "Queue.hpp"
 
 using namespace std;
-void TestStack1()
+void TestStack()
 {
     ST st;
 
@@ -41,29 +41,17 @@ void TestStack1()
     StackDestory(&st);
 }
 
-void TestStack2()
+void TestQueue()
 {
 
 }
 
-
-void TestQueue1()
-{
-
-}
-
-void TestQueue2()
-{
-
-}
 
 int main()
 {
-    TestStack1();
-    TestStack2();
+    TestStack();
 
-    TestQueue1();
-    TestQueue2();
+    TestQueue();
 
     return 0;
 }
