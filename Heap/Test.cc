@@ -1,18 +1,25 @@
 #include <iostream>
-#include <cassert>
+
+#define BIG_HEAP
+#include "Heap.hpp"
 
 using namespace std;
 
-void TestHeap()
-{
-
-}
 
 int main()
 {
-	cout << "heap" << endl;
+    Heap hp;
+    HeapInit(&hp);
 
-	TestHeap();
+    int arr[] = { 4,3,1,9,2,5,8,6,0,7 };
+    int sz = sizeof(arr) / sizeof(int);
 
-	return 0;
+    for (int i = 0; i < sz; i++)
+        HeapPush(&hp, arr[i]);
+
+    HeapPrint(&hp);
+
+    HeapDestroy(&hp);
+
+    return 0;
 }
