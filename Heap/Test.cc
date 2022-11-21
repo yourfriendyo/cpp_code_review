@@ -42,16 +42,21 @@ void TestTopK(int k)
 
 	for (auto e : a)
 		cout << e << " ";
-
 	cout << endl;
 }
 
 void HeapSort(int* a, int n)
 {
+	// 1. 建堆
 	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
 		AdjustDown(a, n, i);
 
-
+	// 2.
+	for (int i = n - 1; i > 0; --i)
+	{
+		swap(a[0], a[i]);
+		AdjustDown(a, i, 0); // 剩余元素个数正好为i
+	}
 }
 
 void TestHeapSort()
@@ -60,13 +65,17 @@ void TestHeapSort()
 	int sz = sizeof(a) / sizeof(int);
 
 	HeapSort(a, sz);
+
+	for (auto e : a)
+		cout << e << " ";
+	cout << endl;
 }
 
 int main()
 {
 	// TestHeap();
 
-	TestTopK(2);
+	// TestTopK(2);
 
 	TestHeapSort();
 
