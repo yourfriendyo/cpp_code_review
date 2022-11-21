@@ -1,89 +1,75 @@
 #include <iostream>
+#include <cassert>
 
 #define BIG_HEAP
 #include "Heap.hpp"
 
 using namespace std;
 
-
-void TestHeap1()
+void TestHeap()
 {
-    Heap hp;
-    HeapInit(&hp);
+	int a[] = { 2,5,3,7,1,9,0,4,8,6 };
+	int sz = sizeof(a) / sizeof(int);
+	Heap hp;
+	HeapInit(&hp);
 
-    int arr[] = { 4,3,1,9,2,5,8,6,0,7 };
-    int sz = sizeof(arr) / sizeof(int);
+	// for (int i = 0; i < sz; i++)
+	// {
+	// 	HeapPush(&hp, a[i]);
+	// 	HeapPrint(&hp);
+	// }
+	//
+	// cout << endl;
+	//
+	// for (int i = 0; i < sz; i++)
+	// {
+	// 	HeapPrint(&hp);
+	// 	HeapPop(&hp);
+	// }
 
-    for (int i = 0; i < sz; i++)
-    {
-        HeapPush(&hp, arr[i]);
-        HeapPrint(&hp);
-    }
+	HeapCreate(&hp, a, sz);
+	HeapPrint(&hp);
 
-    cout << endl;
-
-    for (int i = 0; i < sz; i++)
-    {
-        HeapPrint(&hp);
-        HeapPop(&hp);
-    }
-
-    HeapDestroy(&hp);
+	HeapDestroy(&hp);
 }
 
 void TestTopK(int k)
 {
-    Heap hp;
-    HeapInit(&hp);
+	int a[] = { 2,5,3,7,1,9,0,4,8,6 };
+	int sz = sizeof(a) / sizeof(int);
 
-    int arr[] = { 4,3,1,9,2,5,8,6,0,7 };
-    int sz = sizeof(arr) / sizeof(int);
+	HeapBuild(a, sz);
 
-#ifdef BIG_HEAP
-    // 1. 选第k大的数，建大堆
-    for (int i = 0; i < sz; i++)
-        HeapPush(&hp, arr[i]);
+	for (auto e : a)
+		cout << e << " ";
 
-    while (k--)
-    {
-        cout << HeapTop(&hp) << endl;
-        HeapPop(&hp);
-    }
+	cout << endl;
+}
 
-#else
-    //
+void HeapSort(int* a, int n)
+{
+	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
+		AdjustDown(a, n, i);
 
-#endif
 
-    HeapDestroy(&hp);
 }
 
 void TestHeapSort()
 {
-    Heap hp;
-    HeapInit(&hp);
+	int a[] = { 2,5,3,7,1,9,0,4,8,6 };
+	int sz = sizeof(a) / sizeof(int);
 
-    int arr[] = { 4,3,1,9,2,5,8,6,0,7 };
-    int sz = sizeof(arr) / sizeof(int);
-
-    for (int i = 0; i < sz; i++)
-        HeapPush(&hp, arr[i]);
-
-    for (int i = 0; i < sz; i++) {
-        cout << HeapTop(&hp) << " ";
-        HeapPop(&hp);
-    }
-
-    HeapDestroy(&hp);
+	HeapSort(a, sz);
 }
 
 int main()
 {
-    // TestHeap1();
+	// TestHeap();
 
-    // TestTopK(2);
+	TestTopK(2);
 
-    TestHeapSort();
+	TestHeapSort();
 
-    return 0;
+
+	return 0;
 }
