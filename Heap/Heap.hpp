@@ -110,7 +110,11 @@ void AdjustDown(int* a, int n, int parent)
 #endif
 			child++;
 
+#ifdef BIG_HEAP
 		if (a[child] > a[parent])
+#else
+		if (a[child] < a[parent])
+#endif
 			swap(a[child], a[parent]);
 		else
 			break;

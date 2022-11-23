@@ -1,7 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #include <iostream>
 #include <cassert>
+#include <cstdlib>
 
-#define BIG_HEAP
+// #define BIG_HEAP
 #include "Heap.hpp"
 
 using namespace std;
@@ -35,14 +37,39 @@ void TestHeap()
 
 void TestTopK(int k)
 {
-	int a[] = { 2,5,3,7,1,9,0,4,8,6 };
-	int sz = sizeof(a) / sizeof(int);
+	// 随机写入
+	int n = 10000;
+	srand((unsigned int)time(nullptr));
 
-	HeapBuild(a, sz);
+	FILE* fin = fopen("Data.txt", "w");
+	assert(fin);
+	for (int i = 0; i < n; i++)
+		fprintf(fin, "%d\n", rand());
 
-	for (auto e : a)
-		cout << e << " ";
-	cout << endl;
+
+	int* minHeap = (int*)malloc(sizeof(int) * k);
+	FILE* fout = fopen("Data.txt", "r");
+	assert(minHeap && fout);
+	memset(minHeap, 0, k);
+
+	// 建堆
+	for (int i = 0; i < k; i++)
+		fscanf(fout, "%d", &minHeap[i]);
+	for (int i = (k - 2) / 2; i >= 0; --i)
+		AdjustDown(minHeap, k, i);
+
+	// 比较
+	int val = 0;
+	while (fscanf(fout, "%d", &val) != EOF)
+	{
+		if (val > minHeap[0])
+			minHeap[0] = val;
+		AdjustDown(minHeap, k, 0);
+	}
+
+	// 打印
+	for (int i = 0; i < k; i++)
+		cout << minHeap[i] << endl;
 }
 
 void HeapSort(int* a, int n)
@@ -75,9 +102,9 @@ int main()
 {
 	// TestHeap();
 
-	// TestTopK(2);
+	TestTopK(5);
 
-	TestHeapSort();
+	// TestHeapSort();
 
 
 	return 0;
