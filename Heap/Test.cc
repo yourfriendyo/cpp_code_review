@@ -1,111 +1,98 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <iostream>
 #include <cassert>
-#include <cstdlib>
-
-// #define BIG_HEAP
+#define BIG_HEAP
 #include "Heap.hpp"
 
 using namespace std;
 
+// test heap
 void TestHeap()
 {
-	int a[] = { 2,5,3,7,1,9,0,4,8,6 };
+	int a[] = { 5,2,1,9,4,6,3,8,7,0 };
 	int sz = sizeof(a) / sizeof(int);
 	Heap hp;
+
 	HeapInit(&hp);
 
-	// for (int i = 0; i < sz; i++)
-	// {
-	// 	HeapPush(&hp, a[i]);
-	// 	HeapPrint(&hp);
-	// }
-	//
-	// cout << endl;
-	//
-	// for (int i = 0; i < sz; i++)
-	// {
-	// 	HeapPrint(&hp);
-	// 	HeapPop(&hp);
-	// }
+	for (int i = 0; i < sz; ++i)
+	{
+		HeapPush(&hp, a[i]);
+		HeapPrint(&hp);
+	}
 
-	HeapCreate(&hp, a, sz);
-	HeapPrint(&hp);
+	cout << endl;
+
+	for (int i = 0; i < sz; ++i)
+	{
+		HeapPrint(&hp);
+		HeapPop(&hp);
+	}
+
+	cout << endl;
+
+	Heap tmp = HeapCreate(a, sz);
+	HeapPrint(&tmp);
+	cout << endl;
+
+	HeapBuild(a, sz);
+	for (auto e : a) cout << e << " ";
+	cout << endl;
 
 	HeapDestroy(&hp);
 }
 
-void TestTopK(int k)
+// heap sort
+void HeapSort()
 {
-	// 随机写入
-	int n = 10000;
-	srand((unsigned int)time(nullptr));
+	int a[] = { 5,2,1,9,4,6,3,8,7,0 };
+	int n = sizeof(a) / sizeof(int);
 
-	FILE* fin = fopen("Data.txt", "w");
-	assert(fin);
-	for (int i = 0; i < n; i++)
-		fprintf(fin, "%d\n", rand());
-
-
-	int* minHeap = (int*)malloc(sizeof(int) * k);
-	FILE* fout = fopen("Data.txt", "r");
-	assert(minHeap && fout);
-	memset(minHeap, 0, k);
-
-	// 建堆
-	for (int i = 0; i < k; i++)
-		fscanf(fout, "%d", &minHeap[i]);
-	for (int i = (k - 2) / 2; i >= 0; --i)
-		AdjustDown(minHeap, k, i);
-
-	// 比较
-	int val = 0;
-	while (fscanf(fout, "%d", &val) != EOF)
-	{
-		if (val > minHeap[0])
-			minHeap[0] = val;
-		AdjustDown(minHeap, k, 0);
-	}
-
-	// 打印
-	for (int i = 0; i < k; i++)
-		cout << minHeap[i] << endl;
-}
-
-void HeapSort(int* a, int n)
-{
-	// 1. 建堆
-	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
+	for (int i = (n - 2) / 2; i >= 0; --i)
 		AdjustDown(a, n, i);
 
-	// 2.
-	for (int i = n - 1; i > 0; --i)
+	for (int i = n - 1; i >= 0; --i)
 	{
 		swap(a[0], a[i]);
-		AdjustDown(a, i, 0); // 剩余元素个数正好为i
+		AdjustDown(a, i, 0);
 	}
+
+	for (auto e : a) cout << e << " ";
+	cout << endl;
 }
 
-void TestHeapSort()
+// topk
+void TopK(int k = 5)
 {
-	int a[] = { 2,5,3,7,1,9,0,4,8,6 };
-	int sz = sizeof(a) / sizeof(int);
+	FILE* fin = fopen("Data.txt", "r");
+	assert(fin);
+	int* minHeap = (int*)malloc(sizeof(int) * k);
+	assert(minHeap);
 
-	HeapSort(a, sz);
+	for (int i = 0; i < k; i++)
+		fscanf(fin, "%d", &minHeap[i]);
 
-	for (auto e : a)
-		cout << e << " ";
+	int val = 0;
+	while (fscanf(fin, "%d", &val) != EOF)
+	{
+		if (val > minHeap[0])
+		{
+			minHeap[0] = val;
+			AdjustDown(minHeap, k, 0);
+		}
+	}
+
+	for (int i = 0; i < k; i++)
+		cout << minHeap[i] << " ";
 	cout << endl;
+
+	free(minHeap);
+	fclose(fin);
 }
 
 int main()
 {
-	// TestHeap();
-
-	TestTopK(5);
-
-	// TestHeapSort();
-
-
-	return 0;
+	//TestHeap();
+	HeapSort();
+	TopK();
 }
