@@ -1,6 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <iostream>
 #include "insert_sort.hpp"
+#include "select_sort.hpp"
+#include "swap_sort.hpp"
+#include "merge_sort.hpp"
+#include "nocmp_sort.hpp"
 
 using namespace std;
 
@@ -26,8 +30,9 @@ void test_sort(call_back sort)
 int main()
 {
     // test_sort(insert_sort);
-    test_sort(shell_sort);
-    test_sort(shell_sort_simp);
+    // test_sort(shell_sort);
+    // test_sort(shell_sort_simp);
+    test_sort(select_sort);
 
 
     return 0;
