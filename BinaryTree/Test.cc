@@ -1,18 +1,19 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <iostream>
+#include <queue>
 #include <cassert>
 using namespace std;
 
-typedef struct BinaryTree
+typedef struct TreeNode
 {
     int val;
-    struct BinaryTree* left;
-    struct BinaryTree* right;
+    struct TreeNode* left;
+    struct TreeNode* right;
 }
-BTNode;
+TreeNode;
 
 
-void _PreOrder(BTNode* root)
+void _PreOrder(TreeNode* root)
 {
     if (root == nullptr)
     {
@@ -24,13 +25,13 @@ void _PreOrder(BTNode* root)
     _PreOrder(root->left);
     _PreOrder(root->right);
 }
-void PreOrder(BTNode* root)
+void PreOrder(TreeNode* root)
 {
     _PreOrder(root);
     cout << endl;
 }
 
-void _InOrder(BTNode* root)
+void _InOrder(TreeNode* root)
 {
     if (root == nullptr)
     {
@@ -42,13 +43,13 @@ void _InOrder(BTNode* root)
     cout << root->val << " ";
     _InOrder(root->right);
 }
-void InOrder(BTNode* root)
+void InOrder(TreeNode* root)
 {
     _InOrder(root);
     cout << endl;
 }
 
-void _PostOrder(BTNode* root)
+void _PostOrder(TreeNode* root)
 {
     if (root == nullptr)
     {
@@ -60,15 +61,38 @@ void _PostOrder(BTNode* root)
     _PostOrder(root->right);
     cout << root->val << " ";
 }
-void PostOrder(BTNode* root)
+void PostOrder(TreeNode* root)
 {
     _PostOrder(root);
     cout << endl;
 }
 
-BTNode* BuyBTNode(int val)
+void _LevelOrder(TreeNode* root)
 {
-    BTNode* root = (BTNode*)malloc(sizeof(BTNode));
+    if (root == nullptr)
+        return;
+    queue<TreeNode*> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        TreeNode* front = q.front();
+        cout << front->val << " ";
+        q.pop();
+        if (front->left)
+            q.push(front->left);
+        if (front->right)
+            q.push(front->right);
+    }
+}
+void LevelOrder(TreeNode* root)
+{
+    _LevelOrder(root);
+    cout << endl;
+}
+
+TreeNode* BuyTreeNode(int val)
+{
+    TreeNode* root = (TreeNode*)malloc(sizeof(TreeNode));
     assert(root);
 
     root->val = val;
@@ -78,7 +102,7 @@ BTNode* BuyBTNode(int val)
 }
 
 /*
-void _TreeSize(BTNode* root, int* size)
+void _TreeSize(TreeNode* root, int* size)
 {
     if (root == nullptr)
         return;
@@ -88,14 +112,14 @@ void _TreeSize(BTNode* root, int* size)
     _TreeSize(root->left, size);
     _TreeSize(root->right, size);
 }
-int TreeSize(BTNode* root)
+int TreeSize(TreeNode* root)
 {
     int size = 0;
     _TreeSize(root, &size);
     return size;
 }*/
 
-int TreeSize(BTNode* root)
+int TreeSize(TreeNode* root)
 {
     if (root == nullptr)
         return 0;
@@ -103,7 +127,7 @@ int TreeSize(BTNode* root)
     return TreeSize(root->left) + TreeSize(root->right) + 1;
 }
 
-int TreeLeafSize(BTNode* root)
+int TreeLeafSize(TreeNode* root)
 {
     if (root == nullptr)
         return 0;
@@ -113,7 +137,7 @@ int TreeLeafSize(BTNode* root)
     return TreeLeafSize(root->left) + TreeLeafSize(root->right);
 }
 
-int TreeHeight(BTNode* root)
+int TreeHeight(TreeNode* root)
 {
     if (root == nullptr)
         return 0;
@@ -121,7 +145,7 @@ int TreeHeight(BTNode* root)
     return max(TreeHeight(root->left), TreeHeight(root->right)) + 1;
 }
 
-int TreeKLevelSize(BTNode* root, int k)
+int TreeKLevelSize(TreeNode* root, int k)
 {
     if (root == nullptr)
         return 0;
@@ -131,15 +155,23 @@ int TreeKLevelSize(BTNode* root, int k)
     return TreeKLevelSize(root->left, k - 1) + TreeKLevelSize(root->right, k - 1);
 }
 
+bool TreeFind(TreeNode* root, int x)
+{
+    if (root == nullptr)
+        return false;
+
+    return root->val == x || TreeFind(root->left, x) || TreeFind(root->right, x);
+}
+
 
 int main()
 {
-    BTNode* n1 = BuyBTNode(1);
-    BTNode* n2 = BuyBTNode(2);
-    BTNode* n3 = BuyBTNode(3);
-    BTNode* n4 = BuyBTNode(4);
-    BTNode* n5 = BuyBTNode(5);
-    BTNode* n6 = BuyBTNode(6);
+    TreeNode* n1 = BuyTreeNode(1);
+    TreeNode* n2 = BuyTreeNode(2);
+    TreeNode* n3 = BuyTreeNode(3);
+    TreeNode* n4 = BuyTreeNode(4);
+    TreeNode* n5 = BuyTreeNode(5);
+    TreeNode* n6 = BuyTreeNode(6);
     n1->left = n2;
     n1->right = n4;
     n2->left = n3;
@@ -149,16 +181,20 @@ int main()
     PreOrder(n1);
     InOrder(n1);
     PostOrder(n1);
+    LevelOrder(n1);
 
     // cout << TreeSize(n1) << endl;
     // cout << TreeLeafSize(n1) << endl;
     // cout << TreeHeight(n1) << endl;
 
-    cout << TreeKLevelSize(n1, 1) << endl;
-    cout << TreeKLevelSize(n1, 2) << endl;
-    cout << TreeKLevelSize(n1, 3) << endl;
-    cout << TreeKLevelSize(n1, 5) << endl;
+    // cout << TreeKLevelSize(n1, 1) << endl;
+    // cout << TreeKLevelSize(n1, 2) << endl;
+    // cout << TreeKLevelSize(n1, 3) << endl;
+    // cout << TreeKLevelSize(n1, 5) << endl;
 
+    // cout << TreeFind(n1, 1) << endl;
+    // cout << TreeFind(n1, 3) << endl;
+    // cout << TreeFind(n1, 7) << endl;
 
     return 0;
 }
