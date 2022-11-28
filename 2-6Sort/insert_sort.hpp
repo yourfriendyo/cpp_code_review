@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+using namespace std;
+
 
 void insert_sort(int* a, int n)
 {

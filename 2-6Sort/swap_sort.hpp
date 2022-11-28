@@ -1,3 +1,7 @@
+#pragma once
+#include <iostream>
+using namespace std;
+
 void bubble_sort(int* a, int n)
 {
 
