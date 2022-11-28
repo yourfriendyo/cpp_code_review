@@ -25,6 +25,7 @@ void test_sort(call_back sort)
     print_arr(a, n);
     sort(a, n);
     print_arr(a, n);
+    cout << "--------------------" << endl;
 }
 
 int main()
@@ -32,7 +33,8 @@ int main()
     // test_sort(insert_sort);
     // test_sort(shell_sort);
     // test_sort(shell_sort_simp);
-    test_sort(select_sort);
+    // test_sort(select_sort);
+    // test_sort(heap_sort);
 
 
     return 0;
