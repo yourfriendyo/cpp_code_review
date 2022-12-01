@@ -24,7 +24,20 @@ void bubble_sort(int* a, int n)
 #if PARTITION == 1
 int partition(int* a, int left, int right)
 {
+    int keyi = left;
+    while (left < right)
+    {
+        while (left < right && a[right] > a[keyi])
+            right--;
+        while (left < right && a[left] < a[keyi])
+            left++;
 
+        if (left < right)
+            swap(a[left], a[right]);
+    }
+
+    swap(a[left], a[keyi]);
+    return left;
 }
 
 #elif PARTITION == 2
@@ -43,7 +56,12 @@ int partition(int* a, int left, int right)
 #ifdef NON_RECURSION == 0
 void quick_sort(int* a, int left, int right)
 {
+    if (left >= right)
+        return;
 
+    int keyi = partition(a, left, right);
+    quick_sort(a, left, keyi - 1);
+    quick_sort(a, keyi + 1, right);
 }
 #else
 void quick_sort(int* a, int left, int right)

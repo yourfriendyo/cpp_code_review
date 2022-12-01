@@ -46,7 +46,7 @@ int main()
     test_sort(select_sort);
     test_sort(heap_sort);
     test_sort(bubble_sort);
-    // test_sort(quick_sort);
+    test_sort(quick_sort);
 
     return 0;
 }
