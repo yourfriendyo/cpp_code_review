@@ -7,20 +7,20 @@ void select_sort(int* a, int n)
     int l = 0, r = n - 1;
     while (l < r)
     {
-        int max_i = l;
-        int min_i = l;
+        int maxi = l;
+        int mini = l;
         for (int i = l; i <= r; i++)
         {
-            if (a[i] > a[max_i])
-                max_i = i;
-            if (a[i] < a[min_i])
-                min_i = i;
+            if (a[i] < a[mini])
+                mini = i;
+            if (a[i] > a[maxi])
+                maxi = i;
         }
 
-        swap(a[min_i], a[l]);
-        if (max_i == l)
-            max_i = min_i; // 交换中意外修改max元素位置 修正
-        swap(a[max_i], a[r]);
+        swap(a[l], a[mini]);
+        if (l == maxi)
+            maxi = mini;
+        swap(a[r], a[maxi]);
 
         l++, r--;
     }
@@ -43,13 +43,14 @@ void AdjustDown(int* a, int n, int parent)
         parent = child;
         child = parent * 2 + 1;
     }
+
 }
 void heap_sort(int* a, int n)
 {
-    for (int i = (n - 2) / 2; i >= 0; --i)
+    for (int i = (n - 2) / 2; i >= 0; i--)
         AdjustDown(a, n, i);
 
-    for (int i = n - 1; i > 0; --i)
+    for (int i = n - 1; i > 0; i--)
     {
         swap(a[0], a[i]);
         AdjustDown(a, i, 0);

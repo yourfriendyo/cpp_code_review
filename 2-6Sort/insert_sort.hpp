@@ -5,10 +5,10 @@ using namespace std;
 
 void insert_sort(int* a, int n)
 {
-    for (int i = 0; i < n - 1; i++) // end最后是n-1位置
+    for (int i = 0; i < n - 1; i++)
     {
         int end = i;
-        int x = a[end + 1]; // end后一个元素作待插元素
+        int x = a[end + 1];
 
         while (end >= 0)
         {
@@ -24,18 +24,18 @@ void insert_sort(int* a, int n)
     }
 }
 
-void shell_sort(int* a , int n)
+void shell_sort(int* a, int n)
 {
     int gap = n;
-    while (gap > 1) // gap不断减小分组预排多次
-    {
-        gap = gap / 3 + 1; // 保证最后一定gap=1执行最后一次直接插排
 
-        for (int j = 0; j < gap; j++)
+    while (gap > 1)
+    {
+        gap /= 2;
+        for (int i = 0; i < gap; i++)
         {
-            for (int i = j; i < n - gap; i += gap)
+            for (int j = i; j < n - gap; j += gap)
             {
-                int end = i;
+                int end = j;
                 int x = a[end + gap];
 
                 while (end >= 0)
@@ -59,9 +59,8 @@ void shell_sort_simp(int* a, int n)
     int gap = n;
     while (gap > 1)
     {
-        gap = gap / 3 + 1;
-
-        for (int i = 0; i < n - gap; i++) // 多组同时排
+        gap /= 2;
+        for (int i = 0; i < n - gap; i++)
         {
             int end = i;
             int x = a[end + gap];
@@ -79,4 +78,5 @@ void shell_sort_simp(int* a, int n)
             a[end + gap] = x;
         }
     }
+
 }
