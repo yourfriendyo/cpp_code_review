@@ -6,7 +6,7 @@
 #include "select_sort.hpp"
 #include "swap_sort.hpp"
 #include "merge_sort.hpp"
-#include "nocmp_sort.hpp"
+#include "count_sort.hpp"
 
 using namespace std;
 
@@ -44,7 +44,8 @@ int main()
     // test_sort(select_sort);
     // test_sort(heap_sort);
     // test_sort(bubble_sort);
-    test_sort(quick_sort);
+    // test_sort(quick_sort);
+    test_sort(merge_sort);
 
     return 0;
 }

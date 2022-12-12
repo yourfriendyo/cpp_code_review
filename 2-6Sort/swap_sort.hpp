@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <stack>
 using namespace std;
 
 void bubble_sort(int* a, int n)
@@ -22,7 +23,6 @@ void bubble_sort(int* a, int n)
 }
 
 #define PARTITION 3
-#define NON_RECURSION 0
 
 #if PARTITION == 1
 int partition(int* a, int left, int right)
@@ -69,7 +69,19 @@ int partition(int* a, int left, int right)
 #elif PARTITION == 3
 int partition(int* a, int left, int right)
 {
+    int keyi = left;
+    int prev = left, cur = left + 1;
 
+    while (cur <= right)
+    {
+        if (a[cur] < a[keyi] && ++prev != cur)
+            swap(a[prev], a[cur]);
+
+        ++cur;
+    }
+
+    swap(a[keyi], a[prev]);
+    return prev;
 }
 #endif
 
@@ -96,7 +108,6 @@ int select_mid(int* a, int left, int right)
     }
 }
 
-#ifdef NON_RECURSION == 0
 void quick_sort(int* a, int left, int right)
 {
     if (left >= right)
@@ -114,13 +125,41 @@ void quick_sort(int* a, int left, int right)
     quick_sort(a, left, keyi - 1);
     quick_sort(a, keyi + 1, right);
 }
-#else
-void quick_sort(int* a, int left, int right)
-{
 
+void quick_sort_non_r(int* a, int left, int right)
+{
+    stack<int> s;
+    s.push(left);
+    s.push(right);
+
+    while (!s.empty())
+    {
+        int end = s.top();
+        s.pop();
+        int bgn = s.top();
+        s.pop();
+
+        int keyi = partition(a, bgn, end);
+
+        if (keyi + 1 < end)
+        {
+            s.push(keyi + 1);
+            s.push(end);
+        }
+        if (bgn < keyi - 1)
+        {
+            s.push(bgn);
+            s.push(keyi - 1);
+        }
+    }
 }
-#endif
+
+#define NON_RECURSION 1
 
 void quick_sort(int* a, int n) {
+#ifndef NON_RECURSION
     quick_sort(a, 0, n - 1);
+#else
+    quick_sort_non_r(a, 0, n - 1);
+#endif
 }

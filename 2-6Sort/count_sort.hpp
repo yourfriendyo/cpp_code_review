@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-void count_sort(int* a,int n)
+void count_sort(int* a, int n)
 {
 
 }
