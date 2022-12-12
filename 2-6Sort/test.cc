@@ -4,8 +4,6 @@
 #include <cassert>
 #include "insert_sort.hpp"
 #include "select_sort.hpp"
-#define PARTITION 1
-#define NON_RECURSION 0
 #include "swap_sort.hpp"
 #include "merge_sort.hpp"
 #include "nocmp_sort.hpp"
@@ -40,12 +38,12 @@ void TestOP();
 int main()
 {
     // TestOP();
-    test_sort(insert_sort);
-    test_sort(shell_sort);
-    test_sort(shell_sort_simp);
-    test_sort(select_sort);
-    test_sort(heap_sort);
-    test_sort(bubble_sort);
+    // test_sort(insert_sort);
+    // test_sort(shell_sort);
+    // test_sort(shell_sort_simp);
+    // test_sort(select_sort);
+    // test_sort(heap_sort);
+    // test_sort(bubble_sort);
     test_sort(quick_sort);
 
     return 0;
@@ -68,6 +66,7 @@ void TestOP()
     for (int i = 0; i < N; ++i)
     {
         a1[i] = rand();
+        // a1[i] = i;
         a2[i] = a1[i];
         a3[i] = a1[i];
         a4[i] = a1[i];
@@ -76,7 +75,7 @@ void TestOP()
     }
 
 	int begin1 = clock();
-	insert_sort(a1, N);
+	// insert_sort(a1, N);
 	int end1 = clock();
 
 	int begin2 = clock();
@@ -84,11 +83,11 @@ void TestOP()
 	int end2 = clock();
 
 	int begin3 = clock();
-	select_sort(a3, N);
+	// select_sort(a3, N);
 	int end3 = clock();
 
 	int begin4 = clock();
-	heap_sort(a4, N);
+	// heap_sort(a4, N);
 	int end4 = clock();
 
 	int begin5 = clock();
