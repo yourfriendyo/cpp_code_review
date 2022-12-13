@@ -22,7 +22,8 @@ void bubble_sort(int* a, int n)
     }
 }
 
-#define PARTITION 1
+#define PARTITION 3
+#define THREE_WAYS 1
 
 #if PARTITION == 1
 int partition(int* a, int left, int right)
@@ -113,10 +114,10 @@ void quick_sort(int* a, int left, int right)
     if (left >= right)
         return;
 
-    // if (right - left < 10) {
-    //     insert_sort(a + left, right - left + 1);
-    //     return;
-    // }
+    if (right - left < 10) {
+        insert_sort(a + left, right - left + 1);
+        return;
+    }
 
     int midi = select_mid(a, left, right);
     swap(a[left], a[midi]);
@@ -156,7 +157,8 @@ void quick_sort_non_r(int* a, int left, int right)
 
 #define NON_RECURSION 1
 
-void quick_sort(int* a, int n) {
+void quick_sort(int* a, int n)
+{
 #ifndef NON_RECURSION
     quick_sort(a, 0, n - 1);
 #else
