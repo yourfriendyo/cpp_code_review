@@ -31,5 +31,46 @@ void merge_sort(int* a, int n)
 
     _merge_sort(a, 0, n - 1, tmp);
 
-    delete tmp;
+    delete[] tmp;
+}
+
+void merge_sort_non_r(int* a, int n)
+{
+    int* tmp = new int[n];
+
+    int ranger = 1;
+    while (ranger < n)
+    {
+        for (int i = 0; i < n; i += ranger * 2)
+        {
+            // [i, i+rgr-1] [i+rgr, i+rgr*2-1]
+            int b1 = i, b2 = i + ranger;
+            int e1 = i + ranger - 1, e2 = i + 2 * ranger - 1;
+
+            if (e1 >= n) {
+                e1 = n-1;
+                b2 = n, e2 = n - 1;
+            }
+            else if (b2 >= n) {
+                b2 = n, e2 = n - 1;
+            }
+            else if (e2 >= n) {
+                e2 = n - 1;
+            }
+
+            int j = i;
+            while (b1 <= e1 && b2 <= e2)
+                tmp[j++] = a[b1] < a[b2] ? a[b1++] : a[b2++];
+
+            while (b1 <= e1)
+                tmp[j++] = a[b1++];
+            while (b2 <= e2)
+                tmp[j++] = a[b2++];
+
+            memcpy(a + i, tmp + i, sizeof(int) * (e2 - i + 1));
+        }
+        ranger *= 2;
+    }
+
+    delete[] tmp;
 }

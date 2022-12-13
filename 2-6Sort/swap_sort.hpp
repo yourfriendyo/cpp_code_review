@@ -22,7 +22,7 @@ void bubble_sort(int* a, int n)
     }
 }
 
-#define PARTITION 3
+#define PARTITION 1
 
 #if PARTITION == 1
 int partition(int* a, int left, int right)

@@ -24,8 +24,6 @@ void test_sort(call_back sort)
     cout << "--------------------" << endl;
 
     int a[] = { 8,3,0,7,2,9,1,6,4,5 };
-    // int a[] = { 1,1,1,1,1,1,1,1,1,1 };
-    // int a[] = { 0,1,2,3,4,5,6,7,8,9 };
     int n = sizeof(a) / sizeof(int);
 
     print_arr(a, n);
@@ -37,7 +35,7 @@ void TestOP();
 
 int main()
 {
-    // TestOP();
+    TestOP();
     // test_sort(insert_sort);
     // test_sort(shell_sort);
     // test_sort(shell_sort_simp);
@@ -45,7 +43,9 @@ int main()
     // test_sort(heap_sort);
     // test_sort(bubble_sort);
     // test_sort(quick_sort);
-    test_sort(merge_sort);
+    // test_sort(merge_sort);
+    // test_sort(merge_sort_non_r);
+    // test_sort(count_sort);
 
     return 0;
 }
@@ -54,7 +54,7 @@ int main()
 void TestOP()
 {
     srand(time(0));
-    const int N = 1000000;
+    const int N = 10000000;
     int* a1 = (int*)malloc(sizeof(int) * N);
     int* a2 = (int*)malloc(sizeof(int) * N);
     int* a3 = (int*)malloc(sizeof(int) * N);
