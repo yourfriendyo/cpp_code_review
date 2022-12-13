@@ -38,14 +38,14 @@ void merge_sort_non_r(int* a, int n)
 {
     int* tmp = new int[n];
 
-    int ranger = 1;
-    while (ranger < n)
+    int range = 1;
+    while (range < n)
     {
-        for (int i = 0; i < n; i += ranger * 2)
+        for (int i = 0; i < n; i += range * 2)
         {
             // [i, i+rgr-1] [i+rgr, i+rgr*2-1]
-            int b1 = i, b2 = i + ranger;
-            int e1 = i + ranger - 1, e2 = i + 2 * ranger - 1;
+            int b1 = i, b2 = i + range;
+            int e1 = i + range - 1, e2 = i + 2 * range - 1;
 
             if (e1 >= n) {
                 e1 = n-1;
@@ -69,7 +69,7 @@ void merge_sort_non_r(int* a, int n)
 
             memcpy(a + i, tmp + i, sizeof(int) * (e2 - i + 1));
         }
-        ranger *= 2;
+        range *= 2;
     }
 
     delete[] tmp;

@@ -46,7 +46,7 @@ int main()
     // test_sort(quick_sort);
     // test_sort(merge_sort);
     // test_sort(merge_sort_non_r);
-    // test_sort(count_sort);
+    test_sort(count_sort);
 
     return 0;
 }
