@@ -37,16 +37,16 @@ void TestOP();
 int main()
 {
     // TestOP();
-    // test_sort(insert_sort);
-    // test_sort(shell_sort);
-    // test_sort(shell_sort_simp);
-    // test_sort(select_sort);
-    // test_sort(heap_sort);
-    // test_sort(bubble_sort);
-    // test_sort(quick_sort);
-    // test_sort(merge_sort);
-    // test_sort(merge_sort_non_r);
-    test_sort(count_sort);
+    test_sort(insert_sort);
+    test_sort(shell_sort);
+    test_sort(shell_sort_simp);
+    test_sort(select_sort);
+    test_sort(heap_sort);
+    test_sort(bubble_sort);
+    test_sort(quick_sort);
+    test_sort(merge_sort);
+    test_sort(merge_sort_non_r);
+    // test_sort(count_sort);
 
     return 0;
 }
@@ -76,36 +76,36 @@ void TestOP()
         a6[i] = a1[i];
     }
 
-	int begin1 = clock();
-	// insert_sort(a1, N);
-	int end1 = clock();
+    int begin1 = clock();
+    // insert_sort(a1, N);
+    int end1 = clock();
 
-	int begin2 = clock();
-	shell_sort(a2, N);
-	int end2 = clock();
+    int begin2 = clock();
+    shell_sort(a2, N);
+    int end2 = clock();
 
-	int begin3 = clock();
-	// select_sort(a3, N);
-	int end3 = clock();
+    int begin3 = clock();
+    // select_sort(a3, N);
+    int end3 = clock();
 
-	int begin4 = clock();
-	// heap_sort(a4, N);
-	int end4 = clock();
+    int begin4 = clock();
+    // heap_sort(a4, N);
+    int end4 = clock();
 
-	int begin5 = clock();
-	quick_sort(a5, 0, N - 1);
-	int end5 = clock();
+    int begin5 = clock();
+    quick_sort(a5, 0, N - 1);
+    int end5 = clock();
 
-	int begin6 = clock();
-	merge_sort(a6, N);
-	int end6 = clock();
+    int begin6 = clock();
+    merge_sort(a6, N);
+    int end6 = clock();
 
     printf("insert_sort: %d\n", end1 - begin1);
-	printf("shell_sort : %d\n", end2 - begin2);
-	printf("select_sort: %d\n", end3 - begin3);
-	printf("heap_sort  : %d\n", end4 - begin4);
-	printf("quick_sort : %d\n", end5 - begin5);
-	printf("MergeSort :  %d\n", end6 - begin6);
+    printf("shell_sort : %d\n", end2 - begin2);
+    printf("select_sort: %d\n", end3 - begin3);
+    printf("heap_sort  : %d\n", end4 - begin4);
+    printf("quick_sort : %d\n", end5 - begin5);
+    printf("MergeSort :  %d\n", end6 - begin6);
 
-	free(a6), free(a5), free(a4), free(a3), free(a2), free(a1);
+    free(a6), free(a5), free(a4), free(a3), free(a2), free(a1);
 }

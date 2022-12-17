@@ -4,32 +4,30 @@ using namespace std;
 
 void select_sort(int* a, int n)
 {
-    int l = 0, r = n - 1;
-    while (l < r)
+    int left = 0;
+    int right = n - 1;
+    while (left < right)
     {
-        int maxi = l;
-        int mini = l;
-        for (int i = l; i <= r; i++)
+        int mini = left;
+        int maxi = left;
+        for (int i = left; i <= right; i++)
         {
-            if (a[i] < a[mini])
-                mini = i;
-            if (a[i] > a[maxi])
-                maxi = i;
+            if (a[i] < a[mini]) mini = i;
+            if (a[i] > a[maxi]) maxi = i;
         }
 
-        swap(a[l], a[mini]);
-        if (l == maxi)
+        swap(a[left], a[mini]);
+        if (left == maxi)
             maxi = mini;
-        swap(a[r], a[maxi]);
+        swap(a[right], a[maxi]);
 
-        l++, r--;
+        left++, right--;
     }
 }
 
-void AdjustDown(int* a, int n, int parent)
+void adjust_down(int* a, int n, int parent)
 {
     int child = parent * 2 + 1;
-
     while (child < n)
     {
         if (child + 1 < n && a[child + 1] > a[child])
@@ -43,16 +41,16 @@ void AdjustDown(int* a, int n, int parent)
         parent = child;
         child = parent * 2 + 1;
     }
-
 }
+
 void heap_sort(int* a, int n)
 {
     for (int i = (n - 2) / 2; i >= 0; i--)
-        AdjustDown(a, n, i);
+        adjust_down(a, n, i);
 
     for (int i = n - 1; i > 0; i--)
     {
         swap(a[0], a[i]);
-        AdjustDown(a, i, 0);
+        adjust_down(a, i, 0);
     }
 }

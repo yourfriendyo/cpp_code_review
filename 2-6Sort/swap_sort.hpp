@@ -7,7 +7,7 @@ void bubble_sort(int* a, int n)
 {
     for (int j = 0; j < n; j++)
     {
-        bool no_swap = true;
+        int no_swap = true;
 
         for (int i = 1; i < n - j; i++)
         {
@@ -21,147 +21,114 @@ void bubble_sort(int* a, int n)
             break;
     }
 }
-
-#define PARTITION 3
-#define THREE_WAYS 1
-
-#if PARTITION == 1
-int partition(int* a, int left, int right)
-{
-    int keyi = left;
-    while (left < right)
-    {
-        while (left < right && a[right] >= a[keyi])
-            right--;
-        while (left < right && a[left] <= a[keyi])
-            left++;
-
-        if (left < right)
-            swap(a[left], a[right]);
-    }
-
-    swap(a[left], a[keyi]);
-    return left;
-}
-
-#elif PARTITION == 2
-int partition(int* a, int left, int right)
-{
-    int key = a[left];
-    int pivot = left;
-
-    while (left < right)
-    {
-        while (left < right && a[right] >= key)
-            --right;
-        a[pivot] = a[right];
-        pivot = right;
-
-        while (left < right && a[left] <= key)
-            ++left;
-        a[pivot] = a[left];
-        pivot = left;
-    }
-
-    a[pivot] = key;
-    return pivot;
-}
-
-#elif PARTITION == 3
-int partition(int* a, int left, int right)
-{
-    int keyi = left;
-    int prev = left, cur = left + 1;
-
-    while (cur <= right)
-    {
-        if (a[cur] < a[keyi] && ++prev != cur)
-            swap(a[prev], a[cur]);
-
-        ++cur;
-    }
-
-    swap(a[keyi], a[prev]);
-    return prev;
-}
-#endif
-
-int select_mid(int* a, int left, int right)
-{
-    int mid = left + ((right - left) >> 1);
-    if (a[left] < a[right])
-    {
-        if (a[mid] < a[left])
-            return left;
-        else if (a[mid] < a[right])
-            return mid;
-        else
-            return right;
-    }
-    else
-    {
-        if (a[mid] > a[left])
-            return left;
-        else if (a[mid] > a[right])
-            return mid;
-        else
-            return right;
-    }
-}
-
+#define PART 3
+#if PART == 1
 void quick_sort(int* a, int left, int right)
 {
     if (left >= right)
         return;
 
-    if (right - left < 10) {
-        insert_sort(a + left, right - left + 1);
-        return;
+    int i = left, j = right;
+    int k = i;
+
+    while (i < j)
+    {
+        while (i < j && a[j] >= a[k])
+            j--;
+        while (i < j && a[i] <= a[k])
+            i++;
+        swap(a[i], a[j]);
     }
+    swap(a[i], a[k]);
 
-    int midi = select_mid(a, left, right);
-    swap(a[left], a[midi]);
-
-    int keyi = partition(a, left, right);
-    quick_sort(a, left, keyi - 1);
-    quick_sort(a, keyi + 1, right);
+    quick_sort(a, left, i - 1);
+    quick_sort(a, i + 1, right);
 }
+
+#elif PART == 2
+void quick_sort(int* a, int left, int right)
+{
+    if (left >= right)
+        return;
+
+    int i = left, j = right;
+
+    int key = a[i];
+    int pivot = i;
+    while (i < j)
+    {
+        while (i < j && a[j] >= key)
+            j--;
+        a[pivot] = a[j];
+        pivot = j;
+
+        while (i < j && a[i] <= key)
+            i++;
+        a[pivot] = a[i];
+        pivot = i;
+    }
+    a[pivot] = key;
+
+    quick_sort(a, left, pivot - 1);
+    quick_sort(a, pivot + 1, right);
+}
+
+#else
+void quick_sort(int* a, int left, int right)
+{
+    if (left >= right)
+        return;
+
+    int i = left, j = right;
+
+    int keyi = i;
+    int cur = i + 1, prev = cur - 1;
+    while (cur <= right)
+    {
+        if (a[cur] < a[keyi] && (++prev != cur))
+            swap(a[cur], a[prev]);
+        cur++;
+    }
+    swap(a[prev], a[keyi]);
+
+    quick_sort(a, left, prev - 1);
+    quick_sort(a, prev + 1, right);
+}
+#endif
+
 
 void quick_sort_non_r(int* a, int left, int right)
 {
-    stack<int> s;
-    s.push(left);
-    s.push(right);
+    stack<pair<int, int>> s;
+    s.push({ left, right });
 
     while (!s.empty())
     {
-        int end = s.top();
+        auto idx = s.top();
         s.pop();
-        int bgn = s.top();
-        s.pop();
+        int l = idx.first, r = idx.second;
 
-        int keyi = partition(a, bgn, end);
+        int i = l, j = r;
+        int k = i;
+        while (i < j)
+        {
+            while (i < j && a[j] >= a[k])
+                j--;
+            while (i < j && a[i] <= a[k])
+                i++;
+            swap(a[i], a[j]);
+        }
+        swap(a[i], a[k]);
 
-        if (keyi + 1 < end)
-        {
-            s.push(keyi + 1);
-            s.push(end);
-        }
-        if (bgn < keyi - 1)
-        {
-            s.push(bgn);
-            s.push(keyi - 1);
-        }
+        if (i + 1 < r)
+            s.push({ i + 1, r });
+        if (l < i - 1)
+            s.push({ l, i - 1 });
     }
 }
 
-#define NON_RECURSION 1
-
 void quick_sort(int* a, int n)
 {
-#ifndef NON_RECURSION
-    quick_sort(a, 0, n - 1);
-#else
+    // quick_sort(a, 0, n - 1);
     quick_sort_non_r(a, 0, n - 1);
-#endif
 }
