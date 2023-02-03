@@ -1,7 +1,16 @@
 #! /bin/bash
-cd ~/cpp_code_review
 
+cd D:\cpp_code_review
+
+echo "----------------------- 更新本地库 -----------------------"
+echo ""
+
+git pull
+
+echo ""
 echo "----------------------- 本地库状态 -----------------------"
+echo ""
+
 git status
 
 echo ""
@@ -19,6 +28,8 @@ git commit -m "$remarks"
 
 echo ""
 echo "----------------------- 提交结果 -----------------------"
+echo ""
+
 git push
 
 echo ""
