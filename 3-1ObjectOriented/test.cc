@@ -54,6 +54,9 @@ public:
 
     Date& operator+=(int x)
     {
+        if (x < 0)
+            return *this -= (-1 * x);
+
         _day += x;
         while (_day > getMonthDay())
         {
@@ -68,6 +71,45 @@ public:
         }
 
         return *this;
+    }
+
+    Date operator-(int x)
+    {
+        Date& tmp(*this);
+        tmp -= x;
+
+        return tmp;
+    }
+
+    Date& operator-=(int x)
+    {
+        if (x < 0)
+            return *this += (-1 * x);
+
+        _day -= x;
+        while (_day <= 0)
+        {
+            _month--;
+            if (_month == 0)
+            {
+                _month = 12;
+                _year--;
+            }
+            _day += getMonthDay();
+        }
+        return *this;
+    }
+
+    int operator-(Date d)
+    {
+        if (*this < d)
+            return -1 * (d - *this);
+
+        int cnt = 0;
+        while (d + cnt != *this)
+            cnt++;
+
+        return cnt;
     }
 
     bool operator==(const Date& d)
@@ -120,11 +162,11 @@ private:
 
 int main()
 {
-    Date d1(2023, 2, 11);
+    Date d1(2023, 1, 11);
+    Date d2(2022, 12, 31);
 
-    Date d2(2021, 1, 1);
-
-    cout << (d1 < d2) << endl;
+    cout << (d1 - d2) << endl;
+    cout << (d2 - d1) << endl;
 
     return 0;
 }
