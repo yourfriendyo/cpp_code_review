@@ -24,5 +24,8 @@ int main()
     cout << (d1 < d2) << endl;
     cout << (d1 > d2) << endl;
 
+    cout << d1 << endl;
+    cout << d1 << endl;
+
     return 0;
 }

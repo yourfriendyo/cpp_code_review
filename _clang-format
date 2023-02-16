@@ -24,7 +24,7 @@ TabWidth: 4 # Tab宽度
 UseTab: Never # 不使用Tab
 ColumnLimit: 0 # 每行长度不指定，这样原始的折行方式得以尽可能保留
 AlignConsecutiveAssignments: true # 连续的赋值语句，对齐它们的等号
-AlignConsecutiveDeclarations: false # 连续的声明语句，不要对齐它们的变量名
+AlignConsecutiveDeclarations: true # 连续的声明语句，不要对齐它们的变量名
 AlignEscapedNewlines: Left # 连续的续行符（反斜杠），对齐到可能的最左位置
 AlignOperands: true # 二元运算符的操作数过长，则换行后将它们对齐
 BreakBeforeBinaryOperators: All # 二元运算符表达式太长，把运算符换到下一行行首，而不是上一行行尾

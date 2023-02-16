@@ -55,7 +55,7 @@ Date Date::operator+(int x)
 Date& Date::operator+=(int x)
 {
     if (x < 0)
-        return *this -= (-1 * x);
+        return *this -= -x;
 
     _day += x;
     while (_day > getMonthday())
@@ -91,7 +91,7 @@ Date Date::operator-(int x)
 Date& Date::operator-=(int x)
 {
     if (x < 0)
-        return *this += (-1 * x);
+        return *this += -x;
 
     _day -= x;
     while (_day <= 0)
@@ -153,4 +153,14 @@ bool Date::operator>(const Date& d)
 bool Date::operator>=(const Date& d)
 {
     return !(*this < d);
+}
+
+ostream& operator<<(ostream& out, const Date& d)
+{
+    return out << d._year << "-" << d._month << "-" << d._day;
+}
+
+ostream& operator>>(ostream& in, const Date& d)
+{
+    return in >> d._year >> d._month >> d._day;
 }
