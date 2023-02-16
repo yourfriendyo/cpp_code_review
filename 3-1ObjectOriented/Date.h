@@ -5,7 +5,7 @@ using namespace std;
 class Date
 {
     friend ostream& operator<<(ostream& out, const Date& d);
-    friend ostream& operator>>(ostream& out, const Date& d);
+    friend istream& operator>>(istream& out, Date& d);
 
 public:
     Date(int year = 1, int month = 1, int day = 1);

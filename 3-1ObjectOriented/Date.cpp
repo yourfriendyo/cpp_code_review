@@ -160,7 +160,7 @@ ostream& operator<<(ostream& out, const Date& d)
     return out << d._year << "-" << d._month << "-" << d._day;
 }
 
-ostream& operator>>(ostream& in, const Date& d)
+istream& operator>>(istream& in, Date& d)
 {
     return in >> d._year >> d._month >> d._day;
 }
