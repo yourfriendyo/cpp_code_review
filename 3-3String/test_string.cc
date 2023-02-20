@@ -1,5 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
+#include "string.h"
 using namespace std;
 
 void test7()
@@ -169,14 +171,15 @@ void test1()
 
 int main()
 {
+    test::test_string();
+
     // test1();
     // test2();
     // test3();
     // test4();
     // test5();
     // test6();
-    test7();
-
+    // test7();
 
     return 0;
 }
