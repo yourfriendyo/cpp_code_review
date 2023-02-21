@@ -29,7 +29,6 @@ public:
     {
         _str = new char[_capacity + 1];
         strcpy(_str, str);
-        _str[_size] = '\0';
     }
 
     string(const string& s)
@@ -38,7 +37,6 @@ public:
     {
         _str = new char[_capacity + 1];
         strcpy(_str, s._str);
-        _str[_size] = '\0';
     }
 
     string& operator=(const string& s)
@@ -66,6 +64,9 @@ public:
     const char* c_str() const { return _str; }
 
     size_t size() const { return _size; }
+
+    char&       operator[](size_t pos) { return _str[pos]; }
+    const char& operator[](size_t pos) const { return _str[pos]; }
 
     void resize(size_t n, char c = '\0')
     {
@@ -114,7 +115,6 @@ public:
 
         strcpy(_str + _size, str);
         _size += len;
-        _str[_size] = '\0';
     }
 
     string& operator+=(char c)
@@ -148,6 +148,21 @@ public:
     bool operator>=(const string& s) { return !(*this < s); }
     bool operator!=(const string& s) { return !(*this == s); }
 
+    string& insert(size_t pos, char c)
+    {
+        assert(pos <= _size);
+
+        if (_size + 1 > _capacity)
+            reserve(_capacity == 0 ? 4 : 2 * _capacity);
+
+        for (size_t i = _size + 1; i > pos; i--)
+            _str[i] = _str[i - 1];
+
+        _str[pos] = c;
+        _size++;
+        return *this;
+    }
+
     string& insert(size_t pos, const char* str)
     {
         assert(pos <= _size);
@@ -156,7 +171,7 @@ public:
         if (_size + len > _capacity)
             reserve(_size + len);
 
-        for (int i = _size + 1; i > pos; i--)
+        for (size_t i = _size + 1; i > pos; i--)
             _str[i + len - 1] = _str[i - 1];
 
         strncpy(_str + pos, str, len);
@@ -238,6 +253,8 @@ inline void test_string2()
     string s1("hello world");
     string s2("hello string");
     // s1 += s2;
+    s1.insert(0, 'x');
+    cout << s1.c_str() << endl;
     s1.insert(1, s2);
     cout << s1.c_str() << endl;
     s1.erase(1, 2);
@@ -248,11 +265,8 @@ inline void test_string2()
     string s4("hello string");
 
     cout << (s3 < s4) << endl;
-    ;
     cout << (s3 > s4) << endl;
-    ;
     cout << (s3 == s4) << endl;
-    ;
 
     s3.resize(13, 'x');
     cout << s3.c_str() << endl;
