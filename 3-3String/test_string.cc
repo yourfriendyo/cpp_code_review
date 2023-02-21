@@ -12,6 +12,8 @@ void test7()
     s.push_back('\0');
     s += "abc";
 
+    s.erase(1000);
+
     cout << s << endl;
     cout << s.c_str() << endl;
 
@@ -171,7 +173,8 @@ void test1()
 
 int main()
 {
-    test::test_string();
+    // test::test_string1();
+    test::test_string2();
 
     // test1();
     // test2();
