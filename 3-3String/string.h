@@ -117,29 +117,13 @@ public:
         _size += len;
     }
 
-    string& operator+=(char c)
-    {
-        push_back(c);
-        return *this;
-    }
+    string& operator+=(char c) { push_back(c); return *this; }
 
-    string& operator+=(const char* str)
-    {
-        append(str);
-        return *this;
-    }
+    string& operator+=(const char* str) { append(str); return *this; }
 
-    string& operator+=(const string& s)
-    {
-        append(s._str);
-        return *this;
-    }
+    string& operator+=(const string& s) { append(s._str); return *this; }
 
-    void pop_back()
-    {
-        assert(_size > 0);
-        _size--;
-    }
+    void pop_back() { assert(_size > 0); _size--; }
 
     bool operator<(const string& s) { return strcmp(_str, s._str) < 0; }
     bool operator==(const string& s) { return strcmp(_str, s._str) == 0; }
@@ -187,8 +171,9 @@ public:
 
     string& erase(size_t pos = 0, size_t len = npos)
     {
-        assert(pos <= _size);
-        if (len == npos || pos + len > _size)
+        assert(pos < _size);
+
+        if (len == npos || pos + len >= _size)
         {
             _size       = pos;
             _str[_size] = '\0';
@@ -197,6 +182,8 @@ public:
         {
             for (int i = pos + len; i <= _size; i++)
                 _str[i - len] = _str[i];
+
+            _size -= len;
         }
         return *this;
     }
@@ -259,6 +246,7 @@ inline void test_string2()
     cout << s1.c_str() << endl;
     s1.erase(1, 2);
     cout << s1.c_str() << endl;
+    cout << s1.size() << endl;
 
 
     string s3("hello world");
