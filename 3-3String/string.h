@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
@@ -19,8 +20,8 @@ public:
     iterator begin() { return _str; }
     iterator end() { return _str + _size; }
 
-    const_iterator cbegin() const { return _str; }
-    const_iterator cend() const { return _str + _size; }
+    const_iterator begin() const { return _str; }
+    const_iterator end() const { return _str + _size; }
 
 public:
     string(const char* str = "")
@@ -39,6 +40,12 @@ public:
         strcpy(_str, s._str);
     }
 
+    ~string()
+    {
+        delete[] _str;
+        _size = _capacity = 0;
+    }
+
     string& operator=(const string& s)
     {
         if (this != &s)
@@ -54,21 +61,45 @@ public:
         return *this;
     }
 
-    ~string()
+    const char* c_str() const
     {
-        delete[] _str;
-        _str  = nullptr;
-        _size = _capacity = 0;
+        return _str;
     }
 
-    const char* c_str() const { return _str; }
+    size_t size() const
+    {
+        return _size;
+    }
 
-    size_t size() const { return _size; }
+    size_t capacity() const
+    {
+        return _capacity;
+    }
 
-    char&       operator[](size_t pos) { return _str[pos]; }
-    const char& operator[](size_t pos) const { return _str[pos]; }
+    char& operator[](size_t pos)
+    {
+        return _str[pos];
+    }
 
-    void resize(size_t n, char c = '\0')
+    const char& operator[](size_t pos) const
+    {
+        return _str[pos];
+    }
+
+    void reserve(size_t n)
+    {
+        if (n > _capacity)
+        {
+            char* tmp = new char[n + 1];
+            strcpy(tmp, _str);
+            delete[] _str;
+            _str = tmp;
+
+            _capacity = n;
+        }
+    }
+
+    void resize(size_t n, char ch = '\0')
     {
         if (n <= _size)
         {
@@ -79,70 +110,67 @@ public:
         {
             if (n > _capacity)
                 reserve(n);
-            memset(_str + _size, c, n - _size);
+
+            memset(_str + _size, ch, n - _size);
             _size       = n;
             _str[_size] = '\0';
         }
     }
 
-    void reserve(size_t n)
+    void clear()
     {
-        if (n <= _capacity)
-            return;
-
-        char* tmp = new char[n + 1];
-        strcpy(tmp, _str);
-        delete[] _str;
-        _str = tmp;
-
-        _capacity = n;
+        _size       = 0;
+        _str[_size] = '\0';
     }
 
-    void push_back(char c)
+    void push_back(char ch)
     {
-        if (_size + 1 > _capacity)
+        if (_size + 1 >= _capacity)
             reserve(_capacity == 0 ? 4 : _capacity * 2);
 
-        _str[_size++] = c;
+        _str[_size++] = ch;
         _str[_size]   = '\0';
     }
 
     void append(const char* str)
     {
         size_t len = strlen(str);
-        if (_size + len > _capacity)
+        if (_size + len >= _capacity)
             reserve(_size + len);
 
         strcpy(_str + _size, str);
         _size += len;
     }
 
-    string& operator+=(char c) { push_back(c); return *this; }
+    string& operator+=(char ch)
+    {
+        push_back(ch);
+        return *this;
+    }
 
-    string& operator+=(const char* str) { append(str); return *this; }
+    string& operator+=(const char* str)
+    {
+        append(str);
+        return *this;
+    }
 
-    string& operator+=(const string& s) { append(s._str); return *this; }
+    string& operator+=(const string& s)
+    {
+        append(s._str);
+        return *this;
+    }
 
-    void pop_back() { assert(_size > 0); _size--; }
-
-    bool operator<(const string& s) { return strcmp(_str, s._str) < 0; }
-    bool operator==(const string& s) { return strcmp(_str, s._str) == 0; }
-    bool operator<=(const string& s) { return *this < s || *this == s; }
-    bool operator>(const string& s) { return !(*this <= s); }
-    bool operator>=(const string& s) { return !(*this < s); }
-    bool operator!=(const string& s) { return !(*this == s); }
-
-    string& insert(size_t pos, char c)
+    string& insert(size_t pos, char ch)
     {
         assert(pos <= _size);
 
-        if (_size + 1 > _capacity)
-            reserve(_capacity == 0 ? 4 : 2 * _capacity);
+        if (_size + 1 >= _capacity)
+            reserve(_capacity == 0 ? 4 : _capacity * 2);
 
         for (size_t i = _size + 1; i > pos; i--)
             _str[i] = _str[i - 1];
 
-        _str[pos] = c;
+        _str[pos] = ch;
         _size++;
         return *this;
     }
@@ -152,7 +180,7 @@ public:
         assert(pos <= _size);
 
         size_t len = strlen(str);
-        if (_size + len > _capacity)
+        if (_size + len >= _capacity)
             reserve(_size + len);
 
         for (size_t i = _size + 1; i > pos; i--)
@@ -161,12 +189,6 @@ public:
         strncpy(_str + pos, str, len);
         _size += len;
         return *this;
-    }
-
-    string& insert(size_t pos, const string& s)
-    {
-        assert(pos <= _size);
-        return insert(pos, s._str);
     }
 
     string& erase(size_t pos = 0, size_t len = npos)
@@ -180,21 +202,13 @@ public:
         }
         else
         {
-            for (int i = pos + len; i <= _size; i++)
-                _str[i - len] = _str[i];
-
+            strcpy(_str + pos, _str + pos + len);
             _size -= len;
         }
         return *this;
     }
 
-    iterator erase(iterator first, iterator last)
-    {
-        erase(first - begin(), last - first);
-        return first;
-    }
-
-public:
+private:
     char*  _str;
     size_t _size;
     size_t _capacity;
@@ -202,64 +216,90 @@ public:
     static const size_t npos = -1;
 };
 
-inline void test_string1()
+std::ostream& operator<<(std::ostream& out, const string& s)
 {
-    string s1("hello world");
-    string s2 = "hello world";
-    string s3;
-    s3 = s1;
+    for (auto ch : s) out << ch;
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, string& s)
+{
+    s.clear();
+
+    char ch = in.get();
+    while (ch != ' ' && ch != '\n')
+    {
+        s += ch;
+        ch = in.get();
+    }
+
+    return in;
+}
+
+void test_string1()
+{
+    string s1;
+    string s2("x");
+    string s3("hello world");
+    string s4(s3);
+    string s5 = s4;
+    string s6;
+    s6 = s5;
 
     cout << s1.c_str() << endl;
     cout << s2.c_str() << endl;
     cout << s3.c_str() << endl;
+    cout << s4.c_str() << endl;
+    cout << s5.c_str() << endl;
+    cout << s6.c_str() << endl;
 
-    string::iterator it = s1.begin();
-    while (it != s1.end())
+    string::iterator it = s6.begin();
+    while (it != s6.end())
     {
         (*it)++;
-        (*it)--;
-        cout << *it << ' ';
-        it++;
+        ++it;
+    }
+
+    for (auto& ch : s6)
+    {
+        ch--;
+        cout << ch;
     }
     cout << endl;
 
-    const string&          s4  = s1;
-    string::const_iterator cit = s4.cbegin();
-    while (cit != s4.cend())
-    {
-        // (*cit)++;
-        // (*cit)--;
-        cout << *cit << ' ';
-        cit++;
-    }
-    cout << endl;
+    s6.reserve(10);
+    cout << s6.capacity() << endl;
+    s6.reserve(30);
+    cout << s6.capacity() << endl;
+
+    s6.resize(10);
+    cout << s6.c_str() << endl;
+    cout << s6.size() << endl;
+    s6.resize(50, 'x');
+    cout << s6.c_str() << endl;
+    cout << s6.size() << endl;
 }
 
-inline void test_string2()
+void test_string2()
 {
     string s1("hello world");
-    string s2("hello string");
-    // s1 += s2;
-    s1.insert(0, 'x');
+
+    cout << s1[0] << endl;
+
+    s1.push_back('s');
+    s1 += "ello";
     cout << s1.c_str() << endl;
-    s1.insert(1, s2);
+
+    s1.insert(0, "xxxx");
+    s1.insert(5, "xxxx");
     cout << s1.c_str() << endl;
-    s1.erase(1, 2);
+
+    s1.erase(5, 4);
     cout << s1.c_str() << endl;
-    cout << s1.size() << endl;
 
-
-    string s3("hello world");
-    string s4("hello string");
-
-    cout << (s3 < s4) << endl;
-    cout << (s3 > s4) << endl;
-    cout << (s3 == s4) << endl;
-
-    s3.resize(13, 'x');
-    cout << s3.c_str() << endl;
-    s3.resize(3);
-    cout << s3.c_str() << endl;
+    cout << s1 << endl;
+    std::cin >> s1;
+    cout << s1 << endl;
 }
 
 } // namespace test
