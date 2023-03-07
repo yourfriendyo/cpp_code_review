@@ -109,11 +109,45 @@ void test_vector_expand()
 }
 
 
-int main()
-{
-    // test_vector1();
-    // test_vector2();
-    test_vector3();
-    // test_vector_expand();
-    return 0;
-}
+//int main()
+//{
+//    // test_vector1();
+//    // test_vector2();
+//    test_vector3();
+//    // test_vector_expand();
+//    return 0;
+
+class Solution {
+    vector<string> num2str
+        = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    // 23
+    //
+    // a b c
+    // d e f
+public:
+    void combine(string& digits, int i, string combine_str, vector<string>& sv) {
+        if (i == digits.size()) {
+            sv.push_back(combine_str);
+            cout << combine_str << endl;
+            return;
+        }
+
+        string str = num2str[digits[i] - '0'];
+        for (auto ch : str) {
+            combine(digits, i + 1, combine_str + ch, sv);
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> sv;
+        if (digits.size() == 0) {
+            return sv;
+        }
+        combine(digits, 0, "", sv);
+        return sv;
+    }
+};
+
+// int main()
+// {
+//     Solution().letterCombinations("23");
+// }
