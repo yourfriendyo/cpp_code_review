@@ -4,28 +4,95 @@
 #include <assert.h>
 #include <unistd.h>
 #include <sys/types.h>
-
 /*
+int g_val = 0;
+
+int main()
+{
+    pid_t id = fork();
+    assert(id >= 0);
+
+    if (id == 0)
+    {
+        while (1) {
+            printf("I am child proc, pid: %d, g_val: %d, &g_val: %p\n", getpid(), g_val, &g_val);
+            g_val++;
+            sleep(1);
+        }
+    }
+    else 
+    {
+        while (1) {
+            printf("I am fathr proc, pid: %d, g_val: %d, &g_val: %p\n", getpid(), g_val, &g_val);
+            sleep(1);
+        }
+    }
+
+    return 0;
+
+} */
+
+/* int uninit_val;
+int inited_val = 0;
+
+int main()
+{
+    static int s_val = 0;
+    int a, b, c, d;
+
+    printf("     a: %p\n", &a);
+    printf("     b: %p\n", &b);
+    printf("     c: %p\n", &c);
+    printf("     d: %p\n", &d);
+
+    printf(" heap1: %p\n", malloc(4));
+    printf(" heap2: %p\n", malloc(4));
+    printf(" heap3: %p\n", malloc(4));
+    printf(" heap4: %p\n", malloc(4));
+
+    printf("uninit: %p\n", &uninit_val);
+    printf("inited: %p\n", &inited_val);
+    printf("static: %p\n", &s_val);
+
+    printf(" const: %p\n", "1234");
+    printf(" const: %p\n", main);   
+
+    return 0;
+} */
+
+/* int main()
+{
+    pid_t id = fork();
+    if (id == 0) 
+    {
+        sleep(30);
+    }
+    else 
+    {
+        sleep(5);
+    }
+    return 0;
+} */
+
+
 int g_val = 0;
 
 int main() 
 {
-    // child
     if (fork() == 0) 
     {
         printf("child proc change, g_val=%3d, &g_val=%p\n", g_val, &g_val);
         g_val = 200;
         printf("child proc done  , g_val=%3d, &g_val=%p\n", g_val, &g_val);
-
-        exit(1);
+    }
+    else 
+    {
+        sleep(1);
+        printf("I am parent proc , g_val=%3d, &g_val=%p\n",g_val, &g_val);
     }
 
-    //parent
-    sleep(1);
-    printf("I am parent proc , g_val=%3d, &g_val=%p\n",g_val, &g_val);
-    
     return 0;
-} */
+}
 
 /* void Usage(const char* arg)
 {
