@@ -1,5 +1,5 @@
-myshell:myshell.cc
-	g++ -o $@ $^ -std=c++11
+myshell:myshell.c
+	gcc -o $@ $^
 
 .PHONY:clean
 clean:
