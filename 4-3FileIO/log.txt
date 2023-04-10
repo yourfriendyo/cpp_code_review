@@ -1,1 +1,3 @@
-aaaaaaaaaa
+hello printf
+hello fprintf->stdout
+hello cout
