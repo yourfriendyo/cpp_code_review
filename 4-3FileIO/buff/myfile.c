@@ -57,7 +57,8 @@ size_t myfwrite(const void* ptr, size_t size, size_t nmenb, MY_FILE* stream)
 
     if (stream->flush_way & FLUSH_LINE)
     {
-        myfflush(stream);
+        if (stream->output_buffer[stream->current - 1] == '\n')
+            myfflush(stream);
     }
     else if (stream->flush_way & FLUSH_ALL)
     {
