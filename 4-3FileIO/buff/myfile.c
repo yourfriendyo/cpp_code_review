@@ -70,7 +70,7 @@ size_t myfwrite(const void* ptr, size_t size, size_t nmenb, MY_FILE* stream)
 
 int myfflush(MY_FILE* fp)
 {
-    write(fp->fd, fp->output_buffer, strlen(fp->output_buffer));
+    write(fp->fd, fp->output_buffer, fp->current);
     fp->current = 0;
 
     return 0;
