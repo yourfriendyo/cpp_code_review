@@ -55,13 +55,24 @@ size_t myfwrite(const void* ptr, size_t size, size_t nmenb, MY_FILE* stream)
 
     stream->output_buffer[stream->current] = 0;
 
-    return nmenb * size;
+    if (stream->flush_way & FLUSH_LINE)
+    {
+        myfflush(stream);
+    }
+    else if (stream->flush_way & FLUSH_ALL)
+    {
+        if (stream->current == SIZE)
+            myfflush(stream);
+    }
+
+    return 0;
 }
 
 int myfflush(MY_FILE* fp)
 {
     write(fp->fd, fp->output_buffer, strlen(fp->output_buffer));
     fp->current = 0;
+
     return 0;
 }
 
