@@ -7,33 +7,59 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int main()
-{
-    umask(00);
 
-    int fd1 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
-    int fd2 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
-    int fd3 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
-    int fd4 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
-    int fd5 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
-    int fd6 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
 
-    printf("%d\n", fd1);
-    printf("%d\n", fd2);
-    printf("%d\n", fd3);
-    printf("%d\n", fd4);
-    printf("%d\n", fd5);
-    printf("%d\n", fd6);
+// int main()
+// {
+//     close(0);
+// 
+//     int a = 0, b = 0;
+// 
+//     int fd = open("log.txt", O_CREAT | O_RDONLY, 0664);
+// 
+//     scanf("%d %d", &a, &b);
+//     printf("%d %d\n", a, b);
+// 
+//     return 0;
+// }
 
-    close(fd1);
-    close(fd2);
-    close(fd3);
-    close(fd4);
-    close(fd5);
-    close(fd6);
-
-    return 0;
-}
+// int main()
+// {
+//     // printf("%d\n", stdin->_fileno);
+//     // printf("%d\n", stdout->_fileno);
+//     // printf("%d\n", stderr->_fileno);
+// 
+//     // FILE* fp = fopen("log.txt", "w");
+//     // printf("%d\n", fp->_fileno);
+//     // fclose(fp);
+// 
+//     umask(00);
+//     fclose(stdin);
+//     close(2);
+// 
+//     int fd1 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
+//     int fd2 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
+//     int fd3 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
+//     int fd4 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
+//     int fd5 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
+//     int fd6 = open("log.txt", O_WRONLY | O_RDONLY | O_CREAT, 0664);
+// 
+//     printf("%d\n", fd1);
+//     printf("%d\n", fd2);
+//     printf("%d\n", fd3);
+//     printf("%d\n", fd4);
+//     printf("%d\n", fd5);
+//     printf("%d\n", fd6);
+// 
+//     close(fd1);
+//     close(fd2);
+//     close(fd3);
+//     close(fd4);
+//     close(fd5);
+//     close(fd6);
+// 
+//     return 0;
+// }
 
 // int main()
 // {

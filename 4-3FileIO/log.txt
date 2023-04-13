@@ -1,3 +1,1 @@
-hello printf
-hello fprintf->stdout
-hello cout
+123 456
