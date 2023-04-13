@@ -7,6 +7,46 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+int main()
+{
+    // C
+    printf("hello print\n");
+    fprintf(stdout, "hello printf\n");
+    // System
+    write(1, "hello write\n", 12);
+
+    fork();
+
+    return 0;
+}
+
+// #define LOG        "log.txt"
+// #define LOG_NORMAL "log_normal.txt"
+// #define LOG_ERROR  "log_error.txt"
+// 
+// int main()
+// {
+//     umask(00);
+// 
+//     // close(1);
+//     // close(2);
+//     // int fd1 = open(LOG_NORMAL, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+//     // int fd2 = open(LOG_ERROR,  O_CREAT | O_WRONLY | O_TRUNC, 0664);
+//     // 
+//     //fprintf(stdout, "hello fprintf->stdout\n");
+//     //fprintf(stderr, "hello fprintf->stderr\n");
+// 
+//     // int fd = open("log.txt", O_CREAT | O_WRONLY | O_TRUNC, 0664);
+//     // dup2(fd, 1);
+//     // fprintf(stdout, "hello fprintf->stdout\n");
+//     
+//     close(1);
+//     int fd = open("log.txt", O_CREAT | O_WRONLY | O_TRUNC, 0664);
+//     fprintf(stdout, "hello fprintf->stdout\n");
+//     close(fd);
+// 
+//     return 0;
+// }
 
 
 // int main()

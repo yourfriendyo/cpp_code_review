@@ -1,1 +1,5 @@
-123 456
+hello write
+hello print
+hello printf
+hello print
+hello printf
