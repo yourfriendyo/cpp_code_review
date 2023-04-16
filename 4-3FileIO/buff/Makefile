@@ -1,6 +1,6 @@
 all:main
 
-main:main.c myfile.c
+main:main.c fileio.c
 	gcc -o $@ $^ -std=c99
 
 .PHONY:clean
