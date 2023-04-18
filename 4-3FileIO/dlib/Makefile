@@ -22,15 +22,11 @@ target_objso=$(objso)/add.o $(objso)/sub.o
 all: $(target_obja) $(target_objso) $(target_liba) $(target_libso) $(target_bin)
 
 
-$(obja)/add.o:$(libsrc)/add.c 
-	gcc -o $@ -c $^
-$(obja)/sub.o:$(libsrc)/sub.c
-	gcc -o $@ -c $^
+$(obja)/%.o:$(libsrc)/%.c 
+	gcc -o $@ -c $<
 
-$(objso)/add.o:$(libsrc)/add.c 
-	gcc -fPIC -o $@ -c $^
-$(objso)/sub.o:$(libsrc)/sub.c
-	gcc -fPIC -o $@ -c $^
+$(objso)/%.o:$(libsrc)/%.c 
+	gcc -fPIC -o $@ -c $<
 
 $(target_liba):$(target_obja)
 	ar -rc -o $@ $^
